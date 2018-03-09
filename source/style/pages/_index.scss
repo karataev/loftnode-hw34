@@ -1,0 +1,67 @@
+.social {
+  margin: 0;
+  padding: 0;
+}
+
+.social__item {
+  width: 20px;
+  height: 20px;
+  display: inline-block;
+  color: #fff;
+  text-align: center;
+  line-height: 20px;
+  margin-right: 20px;
+  &:last-child {
+    margin-right: 0;
+  }
+}
+
+.social__link {
+  display: inline-block;
+  color: #fff;
+}
+
+.about {
+  font-family: Montserrat;
+  color: $lightgrey;
+  font-size: 14px; 
+  font-weight: 500;
+}
+.about__subtitle {
+  padding-top: 35px;
+}
+
+.subtitle {
+  text-transform: uppercase;
+  color: $lightgrey;
+  font-size: 14px;
+  text-align: center;
+}
+
+.title {
+  font-family: 'Playfair Display';
+  color: $grey;
+  font-size: 48px;
+  font-weight: 700;
+  margin: 0;
+  text-align: center;
+  margin: 10px 0 55px 0;
+}
+
+.title-name {
+  font-size: 20px;
+  font-family: 'Playfair Display';
+  font-weight: 900;
+  color: #fff;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  text-decoration: none;
+}
+
+a.title-name:hover {
+  color: $link;
+}
+
+.title-name__doter {
+  color: $link;
+}

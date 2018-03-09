@@ -1,0 +1,24 @@
+@import url('https://fonts.googleapis.com/css?family=Playfair+Display:400,700&subset=cyrillic,latin-ext');
+@import url('https://fonts.googleapis.com/css?family=Montserrat:300,400,500,600,700&subset=cyrillic');
+
+// Config
+@import "config/_variables";
+@import "config/_mixins";
+//@import "config/sprite";
+
+// Base
+@import "base/_base";
+
+// Layout
+@import "layout/_header";
+@import "layout/_music";
+@import "layout/_life";
+@import "layout/_product";
+@import "layout/_form";
+@import "layout/_footer";
+// Components
+
+// Pages
+@import "pages/_index";
+@import "pages/_login";
+@import "pages/_admin";

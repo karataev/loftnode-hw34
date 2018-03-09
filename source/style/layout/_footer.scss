@@ -1,0 +1,12 @@
+.footer {
+  min-height: 160px;
+  background-color: #131a22;
+  min-width: 1200px;
+  display: flex;
+}
+
+.footer__container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}

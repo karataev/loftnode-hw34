@@ -1,0 +1,45 @@
+.form {
+  background-color: #fafafa;
+  padding-top: 80px;
+  min-width: 1200px;
+}
+
+.form-email {
+  margin: 0 auto;
+  width: 65%;
+  margin-bottom: 75px;
+}
+
+.form-email__line {
+  display: flex;
+  flex-direction: column;
+  font-family: 'Playfair Display';
+  color: $grey;
+  font-size: 16px;
+  margin-bottom: 20px;
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.form-email__label {
+  text-transform: uppercase;
+  font-weight: 700;
+  margin-bottom: 20px;
+}
+
+.form-email__input {
+  border-radius: 5px;
+  border: 1px solid #b9b9b9;
+  height: 48px;
+  padding: 5px 15px;
+}
+
+.form-email__textarea {
+  border: 1px solid #b9b9b9;
+  height: 130px;
+  padding: 5px 15px;
+  margin-bottom: 10px;
+  resize: vertical;
+}
+

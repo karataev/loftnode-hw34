@@ -1,0 +1,28 @@
+extends ../_template
+
+block variables
+  - var title = 'Login page'
+
+block content
+  header.header
+    .container.header__container
+      .header__top
+        a(href="/").title-name Архипов
+          span.title-name__doter .
+        .header__social
+          ul.social
+            each item in social
+              li.social__item
+                a.social__link(href="http://")
+                  i(class=`fab ${item}`)
+
+      form(action="/login" method="POST").form-login
+        if (msgslogin)
+          .status= msglogin
+        .form-login__line
+          label.form-login__label(for="") Привет,
+          input.form-login__input(type="email" name="email" placeholder="E-MAIL")
+        .form-login__line
+          input.form-login__input(type="password" name="password" placeholder="Пароль")
+        .form-login__line
+          button(type="submit").form-login__button Войти

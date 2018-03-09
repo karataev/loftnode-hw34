@@ -1,0 +1,185 @@
+.wrapper {
+  display: flex;
+  height: 100vh;
+  flex-direction: column;
+}
+
+.admin-content {
+  min-width: 1200px;;
+}
+.admin-header {
+  background-color: #262626;
+  min-width: 1200px;
+}
+
+.admin-header__container {
+  display: flex;
+  justify-content: space-between;
+  padding: 25px 0;
+}
+
+.admin-header__title {
+  margin-right: auto;
+  font-family: 'Playfair Display', serif;
+  color: #ffffff;
+  font-size: 20px;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.admin-header__link {
+  font-family: Montserrat, serif;
+  color: $link;
+  font-size: 16px;
+  font-weight: 500;
+  text-align: center;
+  text-transform: uppercase;
+  transition: color .5s;
+  &:hover {
+    color: darken($link, 7%)
+  }
+}
+
+.admin-content {
+  background-color: #f7f7f7;
+  flex-grow: 1;
+  height: auto;
+  display: flex;
+}
+
+.admin-content__container {
+  height: auto;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.form-container {
+  display: flex;
+  padding: 70px;
+  background-color: #ffffff;
+  width: 80%;
+}
+
+.form-skill {
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+  padding-right: 65px;
+  border-right: 2px solid rgba(0, 0, 0, 0.1);
+}
+
+.form-title {
+  font-family: 'Playfair Display', serif;
+  color: #0a0a0a;
+  font-size: 24px;
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 75px;
+}
+
+.form-skill__input-line {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 30px;
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.form-skill__input-title {
+  margin-right: auto;
+  font-size: 16px;
+  font-weight: 300;
+  line-height: normal;
+  align-self: center;
+}
+
+.form-skill__input {
+  width: 90px;
+  border: none;
+  border-bottom: 2px solid rgba(0, 0, 0, 0.5);
+  text-align: center;
+  padding: 5px 0;
+  font-size: 16px;
+  font-family: Montserrat, serif;
+  &:focus {
+    outline: none;
+    border-bottom: 2px solid rgba(0, 0, 0, 0.9);
+  }
+}
+
+.form-upload {
+  padding-left: 65px;
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+}
+
+.form-upload__wraper {
+  position: relative; /* Даем возможность делать позиционирование, внутри данного элемента */
+  overflow: hidden; /* Все что выходит за пределы - скрываем */
+  width: 100%; /* Задаем ширину кнопки выбора файла */
+  height: 60px; /* Задаем высоту кнопки выбора файла */
+  background-color:  #dbdbdb;
+  border-radius: 3px;
+  padding: 8px 4px;
+  color: #0a0a0a;
+  text-align: center;
+  &:hover {
+    background-color: darken(#dbdbdb, 10%);
+  }
+  input[type="file"]{
+    display: none; /* Обязательно скрываем настоящий Input File */
+  }
+}
+
+.form-upload__label {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+}
+
+.form-upload__input-file-title {
+  font-family: Montserrat, serif;
+  color:  #0a0a0a;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.form-upload__input {
+  font-size: 16px;
+  font-family: Montserrat, serif;
+  width: 100%;
+  background-color: transparent;
+  border: none;
+  border-bottom: 2px solid rgba(0, 0, 0, 0.5);
+  padding: 5px;
+  &:focus {
+    outline: none;
+    border-bottom: 2px solid rgba(0, 0, 0, 0.9);
+  }
+  &::placeholder {
+    font-family: Montserrat;
+    color:  #000000;
+    font-size: 16px;
+    font-weight: 300;
+  }
+}
+
+.form-upload__input-line {
+  margin-bottom: 35px;
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.form-upload__input-line--btn {
+  margin-top: auto;
+}
