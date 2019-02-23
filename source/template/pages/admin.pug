@@ -15,16 +15,16 @@ block content
               .status= msgskill
             label.form-skill__input-line
               span.form-skill__input-title Возраст
-              input(name="age" type="number").form-skill__input
+              input(name="age" type="number" value=skills[0].number).form-skill__input
             label.form-skill__input-line
               span.form-skill__input-title Концертов
-              input(name="concerts" type="number").form-skill__input
+              input(name="concerts" type="number" value=skills[1].number).form-skill__input
             label.form-skill__input-line
               span.form-skill__input-title Число городов
-              input(name="cities" type="number").form-skill__input
+              input(name="cities" type="number" value=skills[2].number).form-skill__input
             label.form-skill__input-line
               span.form-skill__input-title Лет на сцене
-              input(name="years" type="number").form-skill__input
+              input(name="years" type="number" value=skills[3].number).form-skill__input
             .form__btns.form-skill__input-line
               button(type="submit").button Сохранить
           form.form-upload(action='/admin/upload' method="POST" enctype="application/x-www-form-urlencoded")

@@ -19,7 +19,9 @@ router.post('/', (req, res) => {
 });
 
 router.get('/login', (req, res) => {
-  res.render('login');
+  res.render('login', {
+    title: 'Авторизация'
+  });
 });
 
 router.post('/login', (req, res) => {
@@ -31,7 +33,8 @@ router.post('/login', (req, res) => {
 
 router.get('/admin', (req, res) => {
   res.render('admin', {
-    title: 'Администрация'
+    title: 'Администрация',
+    skills: storage.getSkills()
   });
 });
 
