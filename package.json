@@ -5,7 +5,8 @@
   "license": "ISC",
   "scripts": {
     "start": "set NODE_ENV=development&& gulp",
-    "build": "set NODE_ENV=production&& gulp build"
+    "build": "set NODE_ENV=production&& gulp build",
+    "server": "nodemon server"
   },
   "devDependencies": {
     "babel-core": "^6.26.0",
@@ -39,7 +40,12 @@
     "vinyl-source-stream": "^2.0.0"
   },
   "dependencies": {
+    "body-parser": "^1.18.3",
+    "ejs": "^2.6.1",
+    "express": "^4.16.4",
     "jquery": "^3.3.1",
+    "lowdb": "^1.0.0",
+    "nodemon": "^1.18.10",
     "normalize.css": "^7.0.0"
   }
 }
