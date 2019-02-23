@@ -1,8 +1,5 @@
 extends ../_template-admin
 
-block variables
-  - var title = 'Admin page'
-
 block content
   .wrapper
     header.admin-header
@@ -16,16 +13,16 @@ block content
             .form-title Счетчики
             if (msgskill)
               .status= msgskill
-            label.form-skill__input-line 
+            label.form-skill__input-line
               span.form-skill__input-title Возраст
               input(name="age" type="number").form-skill__input
-            label.form-skill__input-line 
+            label.form-skill__input-line
               span.form-skill__input-title Концертов
               input(name="concerts" type="number").form-skill__input
-            label.form-skill__input-line 
+            label.form-skill__input-line
               span.form-skill__input-title Число городов
               input(name="cities" type="number").form-skill__input
-            label.form-skill__input-line 
+            label.form-skill__input-line
               span.form-skill__input-title Лет на сцене
               input(name="years" type="number").form-skill__input
             .form__btns.form-skill__input-line

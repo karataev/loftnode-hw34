@@ -9,9 +9,8 @@ const PORT = 8080;
 storage.init();
 let app = express();
 
-app.set('views', path.join(__dirname, '..', 'public'));
-app.engine('html', require('ejs').renderFile);
-app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, '..', 'source', 'template', 'pages'));
+app.set('view engine', 'pug');
 
 app.use(express.static(path.join(__dirname, '..', 'public')));
 app.use(bodyParser.json());
@@ -28,7 +27,7 @@ app.use((req, res, next) => {
 // error handler
 app.use((err, req, res, next) => {
   res.status(err.status || 500);
-  res.render('error.html');
+  res.render('error');
 });
 
 app.listen(PORT, () => {

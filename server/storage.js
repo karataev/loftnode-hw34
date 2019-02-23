@@ -6,7 +6,31 @@ const adapter = new FileSync(path.join(__dirname, 'db.json'));
 const db = low(adapter);
 
 function init() {
-  db.defaults({ feedback: []})
+  db.defaults({
+    feedback: [],
+    skills: [
+      {
+        "id": "age",
+        "number": 120,
+        "text": "Возраст начала занятий на скрипке"
+      },
+      {
+        "id": "concerts",
+        "number": 76,
+        "text": "Концертов отыграл"
+      },
+      {
+        "id": "cities",
+        "number": 30,
+        "text": "Максимальное число городов в туре"
+      },
+      {
+        "id": "years",
+        "number": 20,
+        "text": "Лет на сцене в качестве скрипача"
+      }
+    ]
+  })
     .write();
 }
 
@@ -16,7 +40,37 @@ function addFeedback(name, email, message) {
     .write();
 }
 
+function getSkills() {
+  return db.get('skills')
+    .value();
+}
+
+function saveSkills(items) {
+  db.get('skills')
+    .find({id: 'age'})
+    .assign({number: items[0]})
+    .write();
+
+  db.get('skills')
+    .find({id: 'concerts'})
+    .assign({number: items[1]})
+    .write();
+
+  db.get('skills')
+    .find({id: 'cities'})
+    .assign({number: items[2]})
+    .write();
+
+  db.get('skills')
+    .find({id: 'years'})
+    .assign({number: items[3]})
+    .write();
+
+}
+
 module.exports = {
   init,
   addFeedback,
+  getSkills,
+  saveSkills,
 };

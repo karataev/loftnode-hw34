@@ -4,7 +4,10 @@ const router = express.Router();
 const storage = require('./storage');
 
 router.get('/', (req, res) => {
-  res.render('index.html');
+  res.render('index', {
+    title: 'Главная',
+    skills: storage.getSkills(),
+  });
 });
 
 router.post('/', (req, res) => {
@@ -16,7 +19,7 @@ router.post('/', (req, res) => {
 });
 
 router.get('/login', (req, res) => {
-  res.render('login.html');
+  res.render('login');
 });
 
 router.post('/login', (req, res) => {
@@ -27,8 +30,15 @@ router.post('/login', (req, res) => {
 });
 
 router.get('/admin', (req, res) => {
-  res.render('admin.html');
+  res.render('admin', {
+    title: 'Администрация'
+  });
 });
 
+router.post('/admin/skills', (req, res) => {
+  let {age, concerts, cities, years} = req.body;
+  storage.saveSkills([age, concerts, cities, years]);
+  res.redirect('/');
+});
 
 module.exports = router;
