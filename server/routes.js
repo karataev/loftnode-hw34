@@ -1,12 +1,16 @@
 const express = require('express');
-const router = express.Router();
+const formidable = require('formidable');
+const fs = require('fs');
+const path = require('path');
 
+const router = express.Router();
 const storage = require('./storage');
 
 router.get('/', (req, res) => {
   res.render('index', {
     title: 'Главная',
     skills: storage.getSkills(),
+    products: storage.getProducts(),
   });
 });
 
@@ -43,5 +47,58 @@ router.post('/admin/skills', (req, res) => {
   storage.saveSkills([age, concerts, cities, years]);
   res.redirect('/');
 });
+
+router.post('/admin/upload', (req, res, next) => {
+  let form = new formidable.IncomingForm();
+  let upload = path.join('./public', 'upload');
+
+  if (!fs.existsSync(upload)) {
+    fs.mkdirSync(upload);
+  }
+
+  form.uploadDir = path.join(process.cwd(), upload);
+
+  form.parse(req, function (err, fields, files) {
+    const {name, price} = fields;
+    if (err) {
+      return next(err);
+    }
+
+    const valid = validation(fields, files);
+
+    if (valid.err) {
+      fs.unlinkSync(files.photo.path);
+      return res.redirect(`/`);
+    }
+
+    const fileName = path.join(upload, files.photo.name);
+
+    fs.rename(files.photo.path, fileName, function (err) {
+      if (err) {
+        console.error(err.message);
+        return
+      }
+
+      let dir = fileName.substr(fileName.indexOf('\\'));
+      storage.addProduct(name, price, dir);
+      res.redirect('/');
+    })
+  });
+
+});
+
+const validation = (fields, files) => {
+  if (files.photo.name === '' || files.photo.size === 0) {
+    return { status: 'Не загружена картинка!', err: true }
+  }
+  if (!fields.name) {
+    return { status: 'Не указано описание картинки!', err: true }
+  }
+  if (!fields.price) {
+    return { status: 'Не указана цена!', err: true }
+  }
+  return { status: 'Ok', err: false }
+};
+
 
 module.exports = router;

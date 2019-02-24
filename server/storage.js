@@ -29,6 +29,8 @@ function init() {
         "number": 20,
         "text": "Лет на сцене в качестве скрипача"
       }
+    ],
+    products: [
     ]
   })
     .write();
@@ -65,7 +67,21 @@ function saveSkills(items) {
     .find({id: 'years'})
     .assign({number: items[3]})
     .write();
+}
 
+function getProducts() {
+  return db.get('products')
+    .value();
+}
+
+function addProduct(name, price, img) {
+  db.get('products')
+    .push({
+      src: img,
+      name,
+      price,
+    })
+    .write();
 }
 
 module.exports = {
@@ -73,4 +89,6 @@ module.exports = {
   addFeedback,
   getSkills,
   saveSkills,
+  getProducts,
+  addProduct,
 };
