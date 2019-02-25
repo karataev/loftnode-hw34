@@ -58,7 +58,7 @@ router.get('/admin', isAdmin, (req, res) => {
 router.post('/admin/skills', isAdmin, (req, res) => {
   let {age, concerts, cities, years} = req.body;
   storage.saveSkills([age, concerts, cities, years]);
-  res.redirect('/');
+  res.redirect('/admin');
 });
 
 router.post('/admin/upload', isAdmin, (req, res, next) => {
@@ -94,7 +94,7 @@ router.post('/admin/upload', isAdmin, (req, res, next) => {
 
       let dir = fileName.substr(fileName.indexOf('\\'));
       storage.addProduct(name, price, dir);
-      res.redirect('/');
+      res.redirect('/admin');
     })
   });
 
