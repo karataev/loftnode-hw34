@@ -1,6 +1,8 @@
 extends ../_template
 
 block content
-    h1 Error
-    h2= error.status
-    pre #{error.stack}
+    .container
+        h1 Ошибка #{error.status}
+        p
+            a(href="/") На главную
+        pre #{error.stack}
