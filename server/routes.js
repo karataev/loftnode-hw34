@@ -2,6 +2,7 @@ const express = require('express');
 const formidable = require('formidable');
 const fs = require('fs');
 const path = require('path');
+const auth = require('./auth');
 
 const router = express.Router();
 const storage = require('./storage');
@@ -31,8 +32,14 @@ router.get('/login', (req, res) => {
 router.post('/login', (req, res) => {
   let email = req.body.email;
   let password = req.body.password;
-  console.log(`Auth with ${email}, ${password}`);
-  res.redirect('/admin');
+  if (auth.isRegisteredUser(email, password)) {
+    res.redirect('/admin');
+  } else {
+    res.render('login', {
+      msgslogin: 'Пользователь не найден'
+    });
+  }
+
 });
 
 router.get('/admin', (req, res) => {
