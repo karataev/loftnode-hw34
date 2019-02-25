@@ -1,6 +1,7 @@
 const express = require('express');
 const path = require('path');
 const bodyParser = require('body-parser');
+const session = require('express-session');
 
 const storage = require('./storage');
 
@@ -11,6 +12,20 @@ let app = express();
 
 app.set('views', path.join(__dirname, '..', 'source', 'template', 'pages'));
 app.set('view engine', 'pug');
+
+app.use(
+  session({
+    secret: 'lolkek',
+    key: 'sessionkey',
+    cookie: {
+      path: '/',
+      httpOnly: true,
+      maxAge: 10 * 60 * 1000
+    },
+    saveUninitialized: false,
+    resave: false
+  })
+);
 
 app.use(express.static(path.join(__dirname, '..', 'public')));
 app.use(bodyParser.json());

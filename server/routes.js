@@ -33,6 +33,7 @@ router.post('/login', (req, res) => {
   let email = req.body.email;
   let password = req.body.password;
   if (auth.isRegisteredUser(email, password)) {
+    req.session.isAdmin = true;
     res.redirect('/admin');
   } else {
     res.render('login', {
@@ -42,20 +43,25 @@ router.post('/login', (req, res) => {
 
 });
 
-router.get('/admin', (req, res) => {
+const isAdmin = (req, res, next) => {
+  if (req.session.isAdmin) return next();
+  res.redirect('/')
+};
+
+router.get('/admin', isAdmin, (req, res) => {
   res.render('admin', {
     title: 'Администрация',
     skills: storage.getSkills()
   });
 });
 
-router.post('/admin/skills', (req, res) => {
+router.post('/admin/skills', isAdmin, (req, res) => {
   let {age, concerts, cities, years} = req.body;
   storage.saveSkills([age, concerts, cities, years]);
   res.redirect('/');
 });
 
-router.post('/admin/upload', (req, res, next) => {
+router.post('/admin/upload', isAdmin, (req, res, next) => {
   let form = new formidable.IncomingForm();
   let upload = path.join('./public', 'upload');
 
