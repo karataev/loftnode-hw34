@@ -2,10 +2,12 @@ const express = require('express');
 const formidable = require('formidable');
 const fs = require('fs');
 const path = require('path');
+const nodemailer = require('nodemailer');
 const auth = require('./auth');
-
 const router = express.Router();
+
 const storage = require('./storage');
+const config = require('./config.json');
 
 router.get('/', (req, res) => {
   res.render('index', {
@@ -16,11 +18,29 @@ router.get('/', (req, res) => {
 });
 
 router.post('/', (req, res) => {
-  let name = req.body.name;
-  let email = req.body.email;
-  let message = req.body.message;
-  storage.addFeedback(name, email, message);
-  res.send(`You entered ${name}, ${email} and ${message}`);
+  let {name, email, message} = req.body;
+
+  if (!name || !email || !message) {
+    return res.json({ msg: 'Все поля нужно заполнить!', status: 'Error' });
+  }
+  const transporter = nodemailer.createTransport(config.mail.smtp);
+  const mailOptions = {
+    from: `"${name}" <${email}>`,
+    to: config.mail.smtp.auth.user,
+    subject: config.mail.subject,
+    text:
+      message.trim().slice(0, 500) +
+      `\n Отправлено с: <${email}>`
+  };
+  transporter.sendMail(mailOptions, function (error, info) {
+    if (error) {
+      return res.json({
+        msg: `При отправке письма произошла ошибка!: ${error}`,
+        status: 'Error'
+      })
+    }
+    res.json({ msg: 'Письмо успешно отправлено!', status: 'Ok' })
+  })
 });
 
 router.get('/login', (req, res) => {
