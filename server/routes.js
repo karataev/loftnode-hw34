@@ -44,6 +44,10 @@ router.post('/', (req, res) => {
 });
 
 router.get('/login', (req, res) => {
+  if (req.session.isAdmin) {
+    res.redirect('/admin');
+    return;
+  }
   res.render('login', {
     title: 'Авторизация'
   });
