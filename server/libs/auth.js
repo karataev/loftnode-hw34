@@ -1,5 +1,5 @@
 const crypto = require('crypto');
-const storage = require('./storage');
+const storage = require('../storage');
 
 function isRegisteredUser(login, password) {
   let userInDb = storage.getUser(login);
