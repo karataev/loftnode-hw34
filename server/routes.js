@@ -85,10 +85,6 @@ router.post('/admin/upload', isAdmin, (req, res, next) => {
   let form = new formidable.IncomingForm();
   let upload = path.join('./public', 'upload');
 
-  if (!fs.existsSync(upload)) {
-    fs.mkdirSync(upload);
-  }
-
   form.uploadDir = path.join(process.cwd(), upload);
 
   form.parse(req, function (err, fields, files) {

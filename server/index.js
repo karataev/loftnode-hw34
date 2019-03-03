@@ -2,6 +2,7 @@ const express = require('express');
 const path = require('path');
 const bodyParser = require('body-parser');
 const session = require('express-session');
+const fs = require('fs');
 
 const storage = require('./storage');
 
@@ -12,6 +13,10 @@ let app = express();
 
 app.set('views', path.join(__dirname, '..', 'source', 'template', 'pages'));
 app.set('view engine', 'pug');
+
+let upload = path.join('./public', 'upload');
+
+if (!fs.existsSync(upload)) fs.mkdirSync(upload);
 
 app.use(
   session({
