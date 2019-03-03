@@ -65,7 +65,7 @@ router.post('/login', (req, res) => {
 
 const isAdmin = (req, res, next) => {
   if (req.session.isAdmin) return next();
-  res.redirect('/')
+  res.redirect('/login');
 };
 
 router.get('/admin', isAdmin, (req, res) => {
