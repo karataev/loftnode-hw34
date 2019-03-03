@@ -4,7 +4,7 @@ const bodyParser = require('body-parser');
 const session = require('express-session');
 const fs = require('fs');
 
-const storage = require('./storage');
+const storage = require('./model/storage');
 
 const PORT = 8080;
 

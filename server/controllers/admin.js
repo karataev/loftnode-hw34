@@ -1,7 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 const formidable = require('formidable');
-const storage = require('../storage');
+const storage = require('../model/storage');
 
 function get(req, res) {
   res.render('admin', {

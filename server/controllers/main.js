@@ -1,4 +1,4 @@
-const storage = require('../storage');
+const storage = require('../model/storage');
 const nodemailer = require('nodemailer');
 const config = require('../config.json');
 
