@@ -11,8 +11,8 @@ block content
         .form-container
           form.form-skill(action='/admin/skills' method="POST")
             .form-title Счетчики
-            if (msgskill)
-              .status= msgskill
+            if (msg)
+              .status= msg
             label.form-skill__input-line
               span.form-skill__input-title Возраст
               input(name="age" type="number" value=skills[0].number).form-skill__input

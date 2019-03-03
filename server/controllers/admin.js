@@ -6,13 +6,16 @@ const storage = require('../model/storage');
 function get(req, res) {
   res.render('admin', {
     title: 'Администрация',
-    skills: storage.getSkills()
+    skills: storage.getSkills(),
+    msg: req.flash('msg')[0],
+    msgfile: req.flash('msgfile')[0]
   });
 }
 
 function postSkills(req, res) {
   let {age, concerts, cities, years} = req.body;
   storage.saveSkills([age, concerts, cities, years]);
+  req.flash('msg', 'Обновление прошло успешно');
   res.redirect('/admin');
 }
 
@@ -58,6 +61,7 @@ function postProduct(req, res, next) {
 
       let dir = fileName.substr(fileName.indexOf('\\'));
       storage.addProduct(name, price, dir);
+      req.flash('msgfile', 'Товар успешно добавлен');
       res.redirect('/admin');
     })
   });

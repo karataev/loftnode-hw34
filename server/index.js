@@ -3,6 +3,7 @@ const path = require('path');
 const bodyParser = require('body-parser');
 const session = require('express-session');
 const fs = require('fs');
+const flash = require('connect-flash');
 
 const storage = require('./model/storage');
 
@@ -31,7 +32,7 @@ app.use(
     resave: false
   })
 );
-
+app.use(flash());
 app.use(express.static(path.join(__dirname, '..', 'public')));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
