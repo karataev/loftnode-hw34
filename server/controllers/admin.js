@@ -1,7 +1,8 @@
 const fs = require('fs');
 const path = require('path');
-const formidable = require('formidable');
 const storage = require('../model/storage');
+const util = require('util');
+const rename = util.promisify(fs.rename);
 
 function get(ctx) {
   if (!ctx.session.isAdmin) {
@@ -23,52 +24,21 @@ function postSkills(ctx) {
   ctx.redirect('/admin');
 }
 
-const validation = (fields, files) => {
-  if (files.photo.name === '' || files.photo.size === 0) {
-    return { status: 'Не загружена картинка!', err: true }
+async function postProduct(ctx, next) {
+  const { name, price } = ctx.request.body;
+  const { path: filePath } = ctx.request.files.photo;
+  let fileName = path.join(process.cwd(), 'public', 'upload', name);
+  const errUpload = await rename(filePath, fileName);
+  if (errUpload) {
+    ctx.body = {
+      mes: 'При загрузке картинки что-то пошло не так...',
+      status: 'Error',
+    };
+    return;
   }
-  if (!fields.name) {
-    return { status: 'Не указано описание картинки!', err: true }
-  }
-  if (!fields.price) {
-    return { status: 'Не указана цена!', err: true }
-  }
-  return { status: 'Ok', err: false }
-};
-
-function postProduct(req, res, next) {
-  let form = new formidable.IncomingForm();
-  let upload = path.join('./public', 'upload');
-
-  form.uploadDir = path.join(process.cwd(), upload);
-
-  form.parse(req, function (err, fields, files) {
-    const {name, price} = fields;
-    if (err) {
-      return next(err);
-    }
-
-    const valid = validation(fields, files);
-
-    if (valid.err) {
-      fs.unlinkSync(files.photo.path);
-      return res.redirect(`/`);
-    }
-
-    const fileName = path.join(upload, files.photo.name);
-
-    fs.rename(files.photo.path, fileName, function (err) {
-      if (err) {
-        console.error(err.message);
-        return
-      }
-
-      let dir = fileName.substr(fileName.indexOf('\\'));
-      storage.addProduct(name, price, dir);
-      req.flash('msgfile', 'Товар успешно добавлен');
-      res.redirect('/admin');
-    })
-  });
+  storage.addProduct(name, price, path.join('upload', name));
+  ctx.flash('msgfile', 'Картинка успешно загружена');
+  ctx.redirect('/admin');
 }
 
 module.exports = {

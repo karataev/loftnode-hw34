@@ -1,5 +1,6 @@
 const Router = require('koa-router');
 const storage = require('./model/storage');
+const koaBody = require('koa-body');
 
 const router = new Router();
 
@@ -11,15 +12,18 @@ router.get('/', mainCtrl.get);
 router.post('/', mainCtrl.post);
 router.get('/login', loginCtrl.get);
 router.post('/login', loginCtrl.post);
-router.get('/admin', /*isAdmin,*/ adminCtrl.get);
-router.post('/admin/skills', /*isAdmin,*/ adminCtrl.postSkills);
+router.get('/admin', adminCtrl.get);
+router.post('/admin/skills', adminCtrl.postSkills);
 
-/*
-const isAdmin = (req, res, next) => {
-  if (req.session.isAdmin) return next();
-  res.redirect('/login');
-};
-
-router.post('/admin/upload', isAdmin, adminCtrl.postProduct);*/
+router.post(
+  '/admin/upload',
+  koaBody({
+    multipart: true,
+    formidable: {
+      uploadDir: process.cwd() + '/public/upload',
+    },
+  }),
+  adminCtrl.postProduct
+);
 
 module.exports = router;
