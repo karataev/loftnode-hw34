@@ -3,20 +3,24 @@ const path = require('path');
 const formidable = require('formidable');
 const storage = require('../model/storage');
 
-function get(req, res) {
-  res.render('admin', {
+function get(ctx) {
+  if (!ctx.session.isAdmin) {
+    ctx.redirect('/login');
+    return;
+  }
+  ctx.render('admin', {
     title: 'Администрация',
     skills: storage.getSkills(),
-    msg: req.flash('msg')[0],
-    msgfile: req.flash('msgfile')[0]
+    msg: ctx.flash('msg')[0],
+    msgfile: ctx.flash('msgfile')[0]
   });
 }
 
-function postSkills(req, res) {
-  let {age, concerts, cities, years} = req.body;
+function postSkills(ctx) {
+  let {age, concerts, cities, years} = ctx.request.body;
   storage.saveSkills([age, concerts, cities, years]);
-  req.flash('msg', 'Обновление прошло успешно');
-  res.redirect('/admin');
+  ctx.flash('msg', 'Обновление прошло успешно');
+  ctx.redirect('/admin');
 }
 
 const validation = (fields, files) => {

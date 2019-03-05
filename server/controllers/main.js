@@ -2,19 +2,20 @@ const storage = require('../model/storage');
 const nodemailer = require('nodemailer');
 const config = require('../config.json');
 
-function get(req, res) {
-  res.render('index', {
+async function get(ctx) {
+  await ctx.render('index', {
     title: 'Главная',
     skills: storage.getSkills(),
     products: storage.getProducts(),
   });
 }
 
-function post(req, res) {
-  let {name, email, message} = req.body;
+async function post(ctx) {
+  let {name, email, message} = ctx.request.body;
 
   if (!name || !email || !message) {
-    return res.json({ msg: 'Все поля нужно заполнить!', status: 'Error' });
+    ctx.body = { msg: 'Все поля нужно заполнить!', status: 'Error' };
+    return;
   }
   const transporter = nodemailer.createTransport(config.mail.smtp);
   const mailOptions = {
@@ -27,12 +28,13 @@ function post(req, res) {
   };
   transporter.sendMail(mailOptions, function (error, info) {
     if (error) {
-      return res.json({
+      ctx.body = {
         msg: `При отправке письма произошла ошибка!: ${error}`,
         status: 'Error'
-      })
+      };
+      return;
     }
-    res.json({ msg: 'Письмо успешно отправлено!', status: 'Ok' })
+    ctx.body = { msg: 'Письмо успешно отправлено!', status: 'Ok' };
   })
 }
 

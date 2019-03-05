@@ -1,23 +1,24 @@
 const auth = require('../libs/auth');
 
-function get(req, res) {
-  if (req.session.isAdmin) {
-    res.redirect('/admin');
+async function get(ctx) {
+  if (ctx.session.isAdmin) {
+    ctx.redirect('/admin');
     return;
   }
-  res.render('login', {
+
+  await ctx.render('login', {
     title: 'Авторизация'
   });
 }
 
-function post(req, res) {
-  let email = req.body.email;
-  let password = req.body.password;
+function post(ctx) {
+  let {email, password} = ctx.request.body;
   if (auth.isRegisteredUser(email, password)) {
-    req.session.isAdmin = true;
-    res.redirect('/admin');
+    ctx.session.isAdmin = true;
+    ctx.redirect('/admin');
   } else {
-    res.render('login', {
+    ctx.render('login', {
+      title: 'Авторизация',
       msgslogin: 'Пользователь не найден'
     });
   }
