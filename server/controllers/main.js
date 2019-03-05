@@ -3,18 +3,21 @@ const nodemailer = require('nodemailer');
 const config = require('../config.json');
 
 async function get(ctx) {
+  let msg = ctx.flash('msgemail')[0];
   await ctx.render('index', {
     title: 'Главная',
     skills: storage.getSkills(),
     products: storage.getProducts(),
+    msgemail: msg
   });
 }
 
-async function post(ctx) {
+function post(ctx) {
   let {name, email, message} = ctx.request.body;
 
   if (!name || !email || !message) {
-    ctx.body = { msg: 'Все поля нужно заполнить!', status: 'Error' };
+    ctx.flash('msgemail', 'Нужно заполнить все поля!');
+    ctx.redirect('/');
     return;
   }
   const transporter = nodemailer.createTransport(config.mail.smtp);
@@ -26,16 +29,19 @@ async function post(ctx) {
       message.trim().slice(0, 500) +
       `\n Отправлено с: <${email}>`
   };
-  transporter.sendMail(mailOptions, function (error, info) {
-    if (error) {
-      ctx.body = {
-        msg: `При отправке письма произошла ошибка!: ${error}`,
-        status: 'Error'
-      };
-      return;
-    }
-    ctx.body = { msg: 'Письмо успешно отправлено!', status: 'Ok' };
-  })
+
+  return new Promise((res, rej) => {
+    transporter.sendMail(mailOptions, function (error, info) {
+      if (error) {
+        ctx.flash('msgemail', 'При отправке письма произошла ошибка!');
+        ctx.redirect('/');
+        return res();
+      }
+      ctx.flash('msgemail', 'Письмо успешно отправлено!');
+      ctx.redirect('/');
+      return res();
+    })
+  });
 }
 
 module.exports = {
